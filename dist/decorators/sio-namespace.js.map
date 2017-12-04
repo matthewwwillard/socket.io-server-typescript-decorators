@@ -1,0 +1,1 @@
+{"version":3,"file":"sio-namespace.js","sourceRoot":"","sources":["../../src/lib/decorators/sio-namespace.ts"],"names":[],"mappings":";;AAAA,2DAA8F;AAE9F,sBAA6B,OAA4B;IACvD,MAAM,GAAG,GAAG,8BAAa,CAAC,WAAW,EAAE,CAAC;IAExC,MAAM,CAAC,UAAU,MAAW;QAC1B,MAAM,CAAC,iCAAgB,CAAC,GAAG,OAAO,CAAC;QACnC,GAAG,CAAC,cAAc,CAAC,MAAM,CAAC,CAAC;IAC7B,CAAC,CAAC;AACJ,CAAC;AAPD,oCAOC"}
