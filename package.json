@@ -18,10 +18,6 @@
     "test:cov": "istanbul cover --dir ./coverage node_modules/mocha/bin/_mocha -- src/lib/**/*.spec.js -R spec --bail && npm run test:remap",
     "test:remap": "remap-istanbul -i ./coverage/coverage.json -o coverage/typescript-report -t html"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/patryk-zielinski93/socket.io-server-typescript-decorators"
-  },
   "author": "Patryk Zieliński",
   "license": "MIT",
   "devDependencies": {
