@@ -21,6 +21,10 @@ export class SioController {
 
   private constructor() {
   }
+  rootSocketServer()
+  {
+    return this.io;
+  }
 
   addIoNamespace(namespaceClass: any) {
     if (this.isInitialized) {
