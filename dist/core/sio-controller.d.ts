@@ -21,4 +21,5 @@ export declare class SioController {
     addConnectionListener(className: any): void;
     init(io: SocketIO.Server): void;
     private prepareNamespace(ioNamespaceClass);
+    private generateCallsWithNamespace(nspObj, nspName);
 }

@@ -32,18 +32,7 @@ export class SioController {
     if (this.isInitialized) {
       throw new Error('SioNamespace can not be added after SioController initialization.');
     }
-    console.log(namespaceClass);
-    if(Array.isArray(namespaceClass))
-    {
-      namespaceClass.forEach(className =>{
-        console.log('Array: ' + className);
-        this.ioNamespaceClasses.push(className);
-      });
-    }
-    else
-    {
-      this.ioNamespaceClasses.push(namespaceClass);    
-    }
+    this.ioNamespaceClasses.push(namespaceClass);    
   
   }
   addConnectionListener(className:any) {
@@ -68,6 +57,21 @@ export class SioController {
   private prepareNamespace(ioNamespaceClass: any) {
     const nspObj = new ioNamespaceClass();
     const nspName = nspObj.constructor[sioNamespaceProp].name;
+
+    if(Array.isArray(nspName))
+    {
+      nspName.forEach(name=>{
+        this.generateCallsWithNamespace(nspObj, name);
+      });
+    }
+    else
+    {
+      this.generateCallsWithNamespace(nspObj, nspName);
+    }
+    
+  }
+  private generateCallsWithNamespace(nspObj:any, nspName)
+  {
     let nsp = this.namespaces.get(nspName);
 
     if (!nsp) {
