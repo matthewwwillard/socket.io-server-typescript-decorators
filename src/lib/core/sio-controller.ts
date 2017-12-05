@@ -1,8 +1,9 @@
 export const sioEventProp = '__sioEvent';
 export const sioNamespaceProp = '__sioNamespace';
+export const sioRegisterConnection = '__sioConnection';
 
 export interface SioNamespaceOptions {
-  name: string;
+  name: string | Array<string>;
   middleware?: Array<(socket: SocketIO.Socket, next: () => void) => void>;
   onConnection?: Array<(socket: SocketIO.Socket) => void>;
 }
@@ -13,6 +14,7 @@ export class SioController {
   private io: SocketIO.Server;
   private isInitialized = false;
   private ioNamespaceClasses: any[] = [];
+  private ioConnectionClasses: any[] = [];  
   private namespaces: Map<string, SocketIO.Namespace> = new Map();
 
   static getInstance() {
@@ -33,6 +35,12 @@ export class SioController {
 
     this.ioNamespaceClasses.push(namespaceClass);
   }
+  addConnectionListener(className:any) {
+    if (this.isInitialized) {
+      throw new Error('SioNamespace can not be added after SioController initialization.');
+    }
+    this.ioConnectionClasses.push(className);
+  }
 
   init(io: SocketIO.Server) {
     if (this.isInitialized) {
@@ -41,7 +49,12 @@ export class SioController {
 
     this.io = io;
     this.ioNamespaceClasses.forEach(nspClass => {
-      this.prepareNamespace(nspClass);
+      if(!Array.isArray(nspClass))
+        this.prepareNamespace(nspClass);
+      else
+        nspClass.forEach(nsClass => {
+          this.prepareNamespace(nsClass);
+        });
     });
     this.isInitialized = true;
   }
