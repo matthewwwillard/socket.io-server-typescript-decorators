@@ -57,6 +57,7 @@ class SioController {
         console.log(nsp);
         if (!nsp) {
             nsp = this.io.of(nspName);
+            console.log(nsp);
         }
         if (nspObj.constructor[exports.sioNamespaceProp].middleware) {
             nspObj.constructor[exports.sioNamespaceProp].middleware.forEach(cb => {
