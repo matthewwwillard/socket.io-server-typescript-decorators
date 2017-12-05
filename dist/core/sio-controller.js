@@ -20,8 +20,10 @@ class SioController {
         if (this.isInitialized) {
             throw new Error('SioNamespace can not be added after SioController initialization.');
         }
+        console.log(namespaceClass);
         if (Array.isArray(namespaceClass)) {
             namespaceClass.forEach(className => {
+                console.log('Array: ' + className);
                 this.ioNamespaceClasses.push(className);
             });
         }
