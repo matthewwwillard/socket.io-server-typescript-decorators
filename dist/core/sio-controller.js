@@ -54,8 +54,9 @@ class SioController {
     }
     generateCallsWithNamespace(nspObj, nspName) {
         let nsp = this.namespaces.get(nspName);
+        console.log(nsp);
         if (!nsp) {
-            nsp = this.io.of(nspObj.constructor[exports.sioNamespaceProp].name);
+            nsp = this.io.of(nspName);
         }
         if (nspObj.constructor[exports.sioNamespaceProp].middleware) {
             nspObj.constructor[exports.sioNamespaceProp].middleware.forEach(cb => {
