@@ -80,6 +80,7 @@ export class SioController {
 
     if (!nsp) {
       nsp = this.io.of(nspName);
+      console.log(nsp);
     }
 
     if (nspObj.constructor[sioNamespaceProp].middleware) {
