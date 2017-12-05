@@ -20,7 +20,14 @@ class SioController {
         if (this.isInitialized) {
             throw new Error('SioNamespace can not be added after SioController initialization.');
         }
-        this.ioNamespaceClasses.push(namespaceClass);
+        if (Array.isArray(namespaceClass)) {
+            namespaceClass.forEach(className => {
+                this.ioNamespaceClasses.push(className);
+            });
+        }
+        else {
+            this.ioNamespaceClasses.push(namespaceClass);
+        }
     }
     addConnectionListener(className) {
         if (this.isInitialized) {
@@ -34,12 +41,7 @@ class SioController {
         }
         this.io = io;
         this.ioNamespaceClasses.forEach(nspClass => {
-            if (!Array.isArray(nspClass))
-                this.prepareNamespace(nspClass);
-            else
-                nspClass.forEach(nsClass => {
-                    this.prepareNamespace(nsClass);
-                });
+            this.prepareNamespace(nspClass);
         });
         this.isInitialized = true;
     }
