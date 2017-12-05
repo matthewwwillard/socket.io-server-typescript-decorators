@@ -2,10 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sioEventProp = '__sioEvent';
 exports.sioNamespaceProp = '__sioNamespace';
+exports.sioRegisterConnection = '__sioConnection';
 class SioController {
     constructor() {
         this.isInitialized = false;
         this.ioNamespaceClasses = [];
+        this.ioConnectionClasses = [];
         this.namespaces = new Map();
     }
     static getInstance() {
@@ -20,13 +22,24 @@ class SioController {
         }
         this.ioNamespaceClasses.push(namespaceClass);
     }
+    addConnectionListener(className) {
+        if (this.isInitialized) {
+            throw new Error('SioNamespace can not be added after SioController initialization.');
+        }
+        this.ioConnectionClasses.push(className);
+    }
     init(io) {
         if (this.isInitialized) {
             throw new Error('SioController can be initialized only once.');
         }
         this.io = io;
         this.ioNamespaceClasses.forEach(nspClass => {
-            this.prepareNamespace(nspClass);
+            if (!Array.isArray(nspClass))
+                this.prepareNamespace(nspClass);
+            else
+                nspClass.forEach(nsClass => {
+                    this.prepareNamespace(nsClass);
+                });
         });
         this.isInitialized = true;
     }
