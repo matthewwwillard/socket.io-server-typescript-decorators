@@ -60,7 +60,9 @@ export class SioController {
 
     if(Array.isArray(nspName))
     {
+      console.log(nspName);
       nspName.forEach(name=>{
+        console.log('Name: ' + name);
         this.generateCallsWithNamespace(nspObj, name);
       });
     }

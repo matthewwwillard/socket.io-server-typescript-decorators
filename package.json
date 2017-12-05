@@ -1,6 +1,6 @@
 {
   "name": "sio-tsd",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Typescript decorators for socket-io server.",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

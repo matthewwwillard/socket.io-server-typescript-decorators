@@ -42,7 +42,9 @@ class SioController {
         const nspObj = new ioNamespaceClass();
         const nspName = nspObj.constructor[exports.sioNamespaceProp].name;
         if (Array.isArray(nspName)) {
+            console.log(nspName);
             nspName.forEach(name => {
+                console.log('Name: ' + name);
                 this.generateCallsWithNamespace(nspObj, name);
             });
         }
