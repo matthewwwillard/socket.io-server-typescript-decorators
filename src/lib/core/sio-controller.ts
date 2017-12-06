@@ -8,10 +8,6 @@ export interface SioNamespaceOptions {
   onConnection?: Array<(socket: SocketIO.Socket) => void>;
 }
 
-export interface SioEventOptions {
-  middleware?: Array<(socket: SocketIO.Socket, data:any) => Promise<boolean>>;
-}
-
 export class SioController {
   private static instance: SioController = null;
 
@@ -58,14 +54,14 @@ export class SioController {
     this.isInitialized = true;
   }
 
-  private async prepareNamespace(ioNamespaceClass: any) {
+  private prepareNamespace(ioNamespaceClass: any) {
     const nspObj = new ioNamespaceClass();
     const nspName = nspObj.constructor[sioNamespaceProp].name;
 
     if(Array.isArray(nspName))
     {
       nspName.forEach(name=>{
-         this.generateCallsWithNamespace(nspObj, name);
+        this.generateCallsWithNamespace(nspObj, name);
       });
     }
     else
@@ -74,7 +70,7 @@ export class SioController {
     }
     
   }
-  private async generateCallsWithNamespace(nspObj:any, nspName)
+  private generateCallsWithNamespace(nspObj:any, nspName)
   {
     let nsp = this.namespaces.get(nspName);
 
@@ -96,24 +92,11 @@ export class SioController {
           cb(socket);
         });
       }
+
       if (nspObj.constructor[sioEventProp]) {
-        console.log(nspObj);
-        nspObj.constructor[sioEventProp].forEach((event: object) => {
-          console.log(event);
-          socket.on(event['name'], data => {
-            if(event['middleware'].length)
-            {
-              event['middleware'].foreach(async (middleware:(data:any)=>Promise<boolean>)=>
-              {
-                  let res = await middleware(data);
-                  if(!res)
-                  {
-                    socket.disconnect(true);
-                    return;
-                  }
-              });
-            }
-            nspObj[event['name']](data, socket);
+        nspObj.constructor[sioEventProp].forEach((event: string) => {
+          socket.on(event, data => {
+            nspObj[event](data, socket);
           });
         });
       }

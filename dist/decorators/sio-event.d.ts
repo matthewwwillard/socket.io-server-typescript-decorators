@@ -1,1 +1,1 @@
-export declare function SioEvent(SioEventOptions: any): MethodDecorator;
+export declare function SioEvent(): MethodDecorator;
