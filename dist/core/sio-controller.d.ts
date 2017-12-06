@@ -7,6 +7,9 @@ export interface SioNamespaceOptions {
     middleware?: Array<(socket: SocketIO.Socket, next: () => void) => void>;
     onConnection?: Array<(socket: SocketIO.Socket) => void>;
 }
+export interface SioEventOptions {
+    middleware?: Array<(socket: SocketIO.Socket, data: any) => Promise<boolean>>;
+}
 export declare class SioController {
     private static instance;
     private io;

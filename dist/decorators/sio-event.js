@@ -1,12 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const sio_controller_1 = require("../core/sio-controller");
-function SioEvent() {
+function SioEvent(SioEventOptions) {
     return function (target, name) {
         if (!target.constructor[sio_controller_1.sioEventProp]) {
             target.constructor[sio_controller_1.sioEventProp] = [];
         }
-        target.constructor[sio_controller_1.sioEventProp].push(name);
+        target.constructor[sio_controller_1.sioEventProp].push({
+            name: name,
+            SioEventOptions
+        });
     };
 }
 exports.SioEvent = SioEvent;
